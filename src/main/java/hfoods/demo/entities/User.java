@@ -37,4 +37,8 @@ public class User implements Serializable {
 
     @OneToMany(mappedBy = "user")
     private List<Information> information = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "diet_id")
+    private Diet diet;
 }

@@ -35,11 +35,9 @@ public class Information implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public int setAge() {
-        if (user.getBirthDate()!=null) {
-            return Period.between(LocalDate.parse(user.getBirthDate(), DateTimeFormatter.ISO_LOCAL_DATE), LocalDate.now()).getYears();
-        } else {
-            return 0;
+    public void setAge() {
+        if (user.getBirthDate() != null) {
+            this.age = Period.between(LocalDate.parse(user.getBirthDate(), DateTimeFormatter.ISO_LOCAL_DATE), LocalDate.now()).getYears();
         }
     }
 
