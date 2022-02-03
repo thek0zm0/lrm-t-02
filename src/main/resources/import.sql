@@ -11,3 +11,4 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 3);
 
 INSERT INTO tb_information (height, weight, sex, activity_Status, user_id) VALUES ('1.8', '90.0', 'M', 'HIGH', 3);
+INSERT INTO tb_information (height, weight, sex, activity_Status, user_id) VALUES ('1.8', '100.0', 'M', 'LOW', 3);

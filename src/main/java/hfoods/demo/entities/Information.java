@@ -26,6 +26,7 @@ public class Information implements Serializable {
     private Double weight;
     private Integer age;
     private Character sex;
+    private String createdDate;
     @Enumerated(EnumType.STRING)
     private ActivityStatus activityStatus;
     private Double basalMetabolicRate;
