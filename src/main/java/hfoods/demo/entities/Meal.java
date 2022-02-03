@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,17 +11,14 @@ import java.util.List;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "tb_diet")
-public class Diet implements Serializable {
+@Table(name = "tb_meal")
+public class Meal implements Serializable {
 
     private static final long serialVersionUID = 9178661439383356177L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String description;
-    private String startDate;
-    private String endDate;
     private Double totalCalories;
     private Double totalProtein;
     private Double totalCarbohydrates;
@@ -33,9 +29,7 @@ public class Diet implements Serializable {
     private Double totalVitaminC;
     private Double totalIron;
 
-    @OneToMany(mappedBy = "diet")
-    private List<User> users;
-
-    @OneToMany(mappedBy = "diet")
-    private List<Meal> meals;
+    @ManyToOne
+    @JoinColumn(name = "diet_id")
+    private Diet diet;
 }
