@@ -1,11 +1,13 @@
 package hfoods.demo.entities;
 
+import hfoods.demo.entities.pk.MealPk;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -15,21 +17,29 @@ import java.io.Serializable;
 public class Meal implements Serializable {
 
     private static final long serialVersionUID = 9178661439383356177L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private MealPk id = new MealPk();
     private String name;
-    private Double totalCalories;
-    private Double totalProtein;
-    private Double totalCarbohydrates;
-    private Double totalFat;
-    private Double totalSodium;
-    private Double totalSugar;
-    private Double totalVitaminA;
-    private Double totalVitaminC;
-    private Double totalIron;
 
-    @ManyToOne
-    @JoinColumn(name = "diet_id")
-    private Diet diet;
+    public Meal(Diet diet, Food food, String name) {
+        id.setDiet(diet);
+        id.setFood(food);
+        this.name = name;
+    }
+
+    public Diet getDiet() {
+        return id.getDiet();
+    }
+
+    public void setDiet(Diet diet) {
+        id.setDiet(diet);
+    }
+
+    public Food getFood() {
+        return id.getFood();
+    }
+
+    public void setFood(Food food) {
+        id.setFood(food);
+    }
 }
