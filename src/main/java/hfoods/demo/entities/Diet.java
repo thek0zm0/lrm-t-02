@@ -35,7 +35,4 @@ public class Diet implements Serializable {
 
     @OneToMany(mappedBy = "diet")
     private List<User> users;
-
-    @OneToMany(mappedBy = "diet")
-    private List<Meal> meals;
 }
