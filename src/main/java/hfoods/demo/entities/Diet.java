@@ -23,16 +23,10 @@ public class Diet implements Serializable {
     private String description;
     private String startDate;
     private String endDate;
-    private Double totalCalories;
-    private Double totalProtein;
-    private Double totalCarbohydrates;
-    private Double totalFat;
-    private Double totalSodium;
-    private Double totalSugar;
-    private Double totalVitaminA;
-    private Double totalVitaminC;
-    private Double totalIron;
 
     @OneToMany(mappedBy = "diet")
     private List<User> users;
+
+    @OneToMany(mappedBy = "diet")
+    private List<Meal> meals;
 }

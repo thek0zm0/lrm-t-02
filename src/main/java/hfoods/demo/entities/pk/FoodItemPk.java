@@ -1,7 +1,7 @@
 package hfoods.demo.entities.pk;
 
-import hfoods.demo.entities.Diet;
 import hfoods.demo.entities.Food;
+import hfoods.demo.entities.Meal;
 import lombok.*;
 
 import javax.persistence.Embeddable;
@@ -15,12 +15,12 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 @Embeddable
-public class MealPk implements Serializable {
+public class FoodItemPk implements Serializable {
 
-    private static final long serialVersionUID = 9178661439383356177L;
+    private static final long serialVersionUID = 9178660439383356177L;
     @ManyToOne
-    @JoinColumn(name = "diet_id")
-    private Diet diet;
+    @JoinColumn(name = "meal_id")
+    private Meal meal;
     @ManyToOne
     @JoinColumn(name = "food_id")
     private Food food;

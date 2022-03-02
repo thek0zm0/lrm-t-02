@@ -26,7 +26,7 @@ public class Food implements Serializable {
     private Double quantity;
     private Double calorie;
     private Double protein;
-    private Double carbohydrates;
+    private Double carbohydrate;
     private Double fat;
     private Double sodium;
     private Double sugar;
