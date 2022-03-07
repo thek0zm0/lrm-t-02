@@ -1,7 +1,9 @@
 package hfoods.demo.resources.exceptions;
 
 import hfoods.demo.services.exceptions.DatabaseException;
+import hfoods.demo.services.exceptions.ForbiddenException;
 import hfoods.demo.services.exceptions.ResourceNotFoundException;
+import hfoods.demo.services.exceptions.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -37,8 +39,26 @@ public class ResourceExceptionHandler {
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
-	}	
-	
+	}
+
+	@ExceptionHandler(ForbiddenException.class)
+	public ResponseEntity<OAuthCustomError> forbidden(ForbiddenException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.FORBIDDEN;
+		OAuthCustomError err = new OAuthCustomError();
+		err.setError("Forbidden exception");
+		err.setErrorDescription(e.getMessage());
+		return ResponseEntity.status(status).body(err);
+	}
+
+	@ExceptionHandler(UnauthorizedException.class)
+	public ResponseEntity<OAuthCustomError> unauthorized(UnauthorizedException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.UNAUTHORIZED;
+		OAuthCustomError err = new OAuthCustomError();
+		err.setError("Unauthorized exception");
+		err.setErrorDescription(e.getMessage());
+		return ResponseEntity.status(status).body(err);
+	}
+
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ValidationError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
