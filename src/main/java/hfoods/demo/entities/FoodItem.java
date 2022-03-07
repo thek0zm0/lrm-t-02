@@ -3,7 +3,6 @@ package hfoods.demo.entities;
 import hfoods.demo.entities.pk.FoodItemPk;
 import lombok.*;
 
-import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -14,7 +13,7 @@ import javax.persistence.Table;
 @Setter
 @EqualsAndHashCode
 @Entity
-@Table(name = "tb_fooditem")
+@Table(name = "tb_foodItem")
 public class FoodItem {
 
     @EmbeddedId

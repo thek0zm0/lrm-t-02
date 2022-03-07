@@ -7,6 +7,13 @@ INSERT INTO tb_user (name, email, cpf, phone, birth_Date, password, diet_id) VAL
 INSERT INTO tb_food (name, food_Group, img_Url, quantity, calorie, protein, carbohydrate, fat, sodium, sugar, vitaminA, vitaminC, iron) VALUES ('Banana','INNATURA','none','100','98.3','1.3','26.0','0.0', '0.0', '0.0', '0.0', '21.6', '0.4');
 INSERT INTO tb_food (name, food_Group, img_Url, quantity, calorie, protein, carbohydrate, fat, sodium, sugar, vitaminA, vitaminC, iron) VALUES ('Maçã Fuji','INNATURA','none','100','53.0','0.3','15.20','0.0', '0.0', '0.0', '0.0', '0.0', '0.0');
 
+INSERT INTO tb_meal (name, time_Hour, diet_id) VALUES ('Café da manhã', '06:30:00', 1);
+INSERT INTO tb_meal (name, time_Hour, diet_id) VALUES ('Almoço', '12:30:00', 1);
+INSERT INTO tb_meal (name, time_Hour, diet_id) VALUES ('Janta', '18:30:00', 1);
+
+INSERT INTO tb_food_Item (meal_id, food_id, quantity, total_Calories) VALUES (1, 1, 2, 198.0);
+INSERT INTO tb_food_Item (meal_id, food_id, quantity, total_Calories) VALUES (1, 2, 1, 53.0);
+
 INSERT INTO tb_role (authority) VALUES ('ROLE_NUTRITIONIST');
 INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
 INSERT INTO tb_role (authority) VALUES ('ROLE_CLIENT');
