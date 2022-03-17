@@ -22,5 +22,5 @@ INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (3, 3);
 
-INSERT INTO tb_information (height, weight, sex, activity_Status, user_id) VALUES ('1.8', '90.0', 'M', 'HIGH', 3);
-INSERT INTO tb_information (height, weight, sex, activity_Status, user_id) VALUES ('1.8', '100.0', 'M', 'LOW', 3);
+INSERT INTO tb_information (height, weight, age, sex, activity_Status, created_Date, user_id) VALUES ('1.8', '90.0', 20, 'M', 'HIGH', '20/04/2021', 3);
+INSERT INTO tb_information (height, weight, age, sex, activity_Status, created_Date, user_id) VALUES ('1.8', '100.0', 21, 'M', 'LOW', '21/06/2021', 3);
