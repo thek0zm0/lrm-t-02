@@ -37,4 +37,13 @@ public class AuthService {
             throw new ForbiddenException("Access denied");
         }
     }
+
+    public void validateAdminOrNutritionist(Long userId) {
+        var user = authenticated();
+
+        if (!user.hasRole("ROLE_ADMIN")
+                && !user.hasRole("ROLE_NUTRITIONIST")) {
+            throw new ForbiddenException("Access denied");
+        }
+    }
 }
