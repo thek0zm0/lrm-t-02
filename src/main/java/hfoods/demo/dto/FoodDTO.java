@@ -15,7 +15,7 @@ public class FoodDTO {
     private String name;
     private FoodGroup foodGroup;
     private String imgUrl;
-    private Double quantity;
+    private Integer quantity;
     private Double calorie;
     private Double protein;
     private Double carbohydrate;

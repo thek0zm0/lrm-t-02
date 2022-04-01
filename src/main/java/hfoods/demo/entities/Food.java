@@ -23,7 +23,7 @@ public class Food implements Serializable {
     @Enumerated(EnumType.STRING)
     private FoodGroup foodGroup;
     private String imgUrl;
-    private Double quantity;
+    private Integer quantity;
     private Double calorie;
     private Double protein;
     private Double carbohydrate;
