@@ -41,6 +41,8 @@ public class FoodService {
 
     @Transactional
     public FoodDTO insert(FoodDTO dto) {
+        var user = authService.authenticated();
+        authService.validateAdminOrNutritionist(user.getId());
         var food = new Food();
         copyDtoToEntity(dto, food);
         food = foodRepository.save(food);
@@ -48,6 +50,8 @@ public class FoodService {
     }
 
     public void delete(Long id) {
+        var user = authService.authenticated();
+        authService.validateAdminOrNutritionist(user.getId());
         try {
             foodRepository.deleteById(id);
         }
@@ -61,6 +65,8 @@ public class FoodService {
 
     @Transactional
     public FoodDTO update(Long id, FoodDTO dto) {
+        var user = authService.authenticated();
+        authService.validateAdminOrNutritionist(user.getId());
         try {
             var food = foodRepository.getOne(id);
             copyDtoToEntity(dto, food);

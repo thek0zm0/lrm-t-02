@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,6 +30,7 @@ public class FoodResource {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
     public ResponseEntity<FoodDTO> insertFood(@RequestBody FoodDTO dto) {
         dto = foodService.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -37,12 +39,14 @@ public class FoodResource {
     }
 
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
     public ResponseEntity<FoodDTO> updateFood(@PathVariable Long id, @RequestBody FoodDTO dto) {
         dto = foodService.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
     public ResponseEntity<Void> deleteFood(@PathVariable Long id) {
         foodService.delete(id);
         return ResponseEntity.noContent().build();
