@@ -54,6 +54,10 @@ public class User implements UserDetails, Serializable {
         return email;
     }
 
+    public void addInformation(Information newInfo) {
+        information.add(newInfo);
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

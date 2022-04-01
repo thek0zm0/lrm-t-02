@@ -35,18 +35,18 @@ public class Information implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void setAge() {
+    public void updateAge() {
         if (user.getBirthDate() != null) {
             this.age = Period.between(LocalDate.parse(user.getBirthDate(), DateTimeFormatter.ISO_LOCAL_DATE), LocalDate.now()).getYears();
         }
     }
 
-    public void setBasalMetabolicRate() {
+    public void updateBasalMetabolicRate() {
         var basalMetabolicRate = 0.0;
         if (getSex()=='M') {
-            basalMetabolicRate = getActivityNumber() * 66 + 13.7 * (weight + (5 * height - (6.8 * age)));
+            basalMetabolicRate = getActivityNumber() * (66 + (13.7 * weight) + (5 * height - (6.8 * age)));
         } else if (getSex()=='F') {
-            basalMetabolicRate = getActivityNumber() * 655 + 9.6 * (weight + (1.8 * height - (4.7 * age)));
+            basalMetabolicRate = getActivityNumber() * (655 + (9.6 * weight) + (1.8 * height - (4.7 * age)));
         }
         this.basalMetabolicRate = basalMetabolicRate;
     }
