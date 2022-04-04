@@ -1,6 +1,5 @@
 package hfoods.demo.resources;
 
-import hfoods.demo.dto.FoodDTO;
 import hfoods.demo.dto.MealDTO;
 import hfoods.demo.services.MealService;
 import org.springframework.beans.factory.annotation.Autowired;

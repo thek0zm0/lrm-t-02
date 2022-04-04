@@ -2,7 +2,6 @@ package hfoods.demo.services;
 
 import hfoods.demo.dto.FoodDTO;
 import hfoods.demo.dto.MealDTO;
-import hfoods.demo.entities.Food;
 import hfoods.demo.entities.FoodItem;
 import hfoods.demo.entities.Meal;
 import hfoods.demo.repositories.FoodItemRepository;
@@ -18,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service

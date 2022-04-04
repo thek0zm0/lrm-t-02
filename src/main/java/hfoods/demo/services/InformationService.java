@@ -1,8 +1,6 @@
 package hfoods.demo.services;
 
-import hfoods.demo.dto.FoodDTO;
 import hfoods.demo.dto.InformationDTO;
-import hfoods.demo.entities.Food;
 import hfoods.demo.entities.Information;
 import hfoods.demo.repositories.InformationRepository;
 import hfoods.demo.services.exceptions.ResourceNotFoundException;
@@ -15,8 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class InformationService {
