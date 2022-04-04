@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MealService {
@@ -36,15 +38,23 @@ public class MealService {
 
     @Transactional(readOnly = true)
     public MealDTO findById(Long id) {
-        var obj = mealRepository.findById(id);
+        var obj = mealRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Meal not found"));
+        var foodsItem = foodItemRepository.findByItemPkMeal(obj);
+        var foods = foodRepository.findAllByIdIn(foodsItem
+                .stream().map(uniq -> uniq.getFood().getId()).collect(Collectors.toList()));
 
-        return new MealDTO(obj.orElseThrow(() -> new ResourceNotFoundException("Meal not found")));
+        return new MealDTO(obj, foods.stream().map(FoodDTO::new).collect(Collectors.toList()));
     }
 
     public Page<MealDTO> findAll(Pageable pageable) {
         var meals = mealRepository.findAll(pageable);
 
-        return meals.map(MealDTO::new);
+        return meals.map(obj -> {
+            var foodsItem = foodItemRepository.findByItemPkMeal(obj);
+            var foods = foodRepository.findAllByIdIn(foodsItem
+                    .stream().map(uniq -> uniq.getFood().getId()).collect(Collectors.toList()));
+            return new MealDTO(obj, foods.stream().map(FoodDTO::new).collect(Collectors.toList()));
+        });
     }
 
     public void insertFood(Long mealId, Long foodId) {

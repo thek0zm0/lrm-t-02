@@ -1,6 +1,6 @@
 package hfoods.demo.entities;
 
-import hfoods.demo.entities.pk.FoodItemPk;
+import hfoods.demo.entities.pk.ItemPk;
 import lombok.*;
 
 import javax.persistence.EmbeddedId;
@@ -17,22 +17,20 @@ import javax.persistence.Table;
 public class FoodItem {
 
     @EmbeddedId
-    private FoodItemPk id = new FoodItemPk();
+    private ItemPk itemPk = new ItemPk();
     private Integer quantity;
     private Double totalCalories;
 
     public FoodItem(Meal meal, Food food) {
-        id.setMeal(meal);
-        id.setFood(food);
-        this.quantity = quantity;
-        this.totalCalories = totalCalories;
+        itemPk.setMeal(meal);
+        itemPk.setFood(food);
     }
 
     public Meal getMeal() {
-        return id.getMeal();
+        return itemPk.getMeal();
     }
 
     public Food getFood() {
-        return id.getFood();
+        return itemPk.getFood();
     }
 }

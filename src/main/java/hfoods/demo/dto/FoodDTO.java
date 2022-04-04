@@ -1,6 +1,7 @@
 package hfoods.demo.dto;
 
 import hfoods.demo.entities.Food;
+import hfoods.demo.entities.FoodItem;
 import hfoods.demo.entities.enums.FoodGroup;
 import lombok.*;
 

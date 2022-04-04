@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 @Embeddable
-public class FoodItemPk implements Serializable {
+public class ItemPk implements Serializable {
 
     private static final long serialVersionUID = 9178660439383356177L;
     @ManyToOne
