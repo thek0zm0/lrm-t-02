@@ -29,7 +29,7 @@ public class MealResource {
         return ResponseEntity.ok().body(mealService.findAll(pageable));
     }
 
-    @PostMapping("/{mealId}/{foodId}")
+    @PutMapping("/{mealId}/{foodId}")
     @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
     public ResponseEntity<Void> insertFoodInMeal(@PathVariable Long mealId, @PathVariable Long foodId) {
         mealService.insertFood(mealId, foodId);

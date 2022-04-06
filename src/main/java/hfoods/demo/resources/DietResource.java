@@ -1,5 +1,8 @@
 package hfoods.demo.resources;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import hfoods.demo.dto.DietDTO;
 import hfoods.demo.services.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/diet")
@@ -29,7 +33,6 @@ public class DietResource {
         return ResponseEntity.ok().body(dietService.findAll(pageable));
     }
 
-
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
     public ResponseEntity<DietDTO> insertDiet(@RequestBody DietDTO dto) {
@@ -37,5 +40,17 @@ public class DietResource {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
+    }
+
+    @PutMapping("/{dietId}")
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
+    // arrumar essa porcaria
+    public ResponseEntity<Void> insertMealInDiet(@PathVariable Long dietId,
+                                                 @RequestBody @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+                                                 @JsonProperty("mealsIds")
+                                                         List<Long> mealIds) {
+        dietService.insertMeals(dietId, mealIds);
+
+        return ResponseEntity.noContent().build();
     }
 }
