@@ -39,7 +39,7 @@ public class MealResource {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
-    public ResponseEntity<MealDTO> insertFood(@RequestBody MealDTO dto) {
+    public ResponseEntity<MealDTO> insertMeal(@RequestBody MealDTO dto) {
         dto = mealService.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
