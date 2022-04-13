@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -84,6 +85,19 @@ public class DietService {
         copyDtoToEntity(dto, diet);
         diet = dietRepository.save(diet);
         return new DietDTO(diet);
+    }
+
+    @Transactional
+    public DietDTO update(Long id, DietDTO dto) {
+        try {
+            Diet entity = dietRepository.getOne(id);
+            copyDtoToEntity(dto, entity);
+            entity = dietRepository.save(entity);
+            return new DietDTO(entity);
+        }
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Id not found " + id);
+        }
     }
 
     public void insertMeals(Long dietId, List<Long> mealIds) {

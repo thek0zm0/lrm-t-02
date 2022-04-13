@@ -20,12 +20,12 @@ public class MealResource {
     private MealService mealService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<MealDTO> findMealById(@PathVariable Long id) {
+    public ResponseEntity<MealDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(mealService.findById(id));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Page<MealDTO>> findAllMeal(Pageable pageable) {
+    public ResponseEntity<Page<MealDTO>> findAll(Pageable pageable) {
         return ResponseEntity.ok().body(mealService.findAll(pageable));
     }
 
@@ -39,7 +39,7 @@ public class MealResource {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
-    public ResponseEntity<MealDTO> insertMeal(@RequestBody MealDTO dto) {
+    public ResponseEntity<MealDTO> insert(@RequestBody MealDTO dto) {
         dto = mealService.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
@@ -48,7 +48,7 @@ public class MealResource {
 
     @PutMapping(value = "/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
-    public ResponseEntity<MealDTO> updateMeal(@PathVariable Long id, @RequestBody MealDTO dto) {
+    public ResponseEntity<MealDTO> update(@PathVariable Long id, @RequestBody MealDTO dto) {
         dto = mealService.update(id, dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();

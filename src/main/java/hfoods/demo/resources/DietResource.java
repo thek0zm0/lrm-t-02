@@ -21,18 +21,18 @@ public class DietResource {
     private DietService dietService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<DietDTO> findMealById(@PathVariable Long id) {
+    public ResponseEntity<DietDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(dietService.findById(id));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Page<DietDTO>> findAllMeal(Pageable pageable) {
+    public ResponseEntity<Page<DietDTO>> findAll(Pageable pageable) {
         return ResponseEntity.ok().body(dietService.findAll(pageable));
     }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
-    public ResponseEntity<DietDTO> insertDiet(@RequestBody DietDTO dto) {
+    public ResponseEntity<DietDTO> insert(@RequestBody DietDTO dto) {
         dto = dietService.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();

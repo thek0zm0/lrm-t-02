@@ -20,18 +20,18 @@ public class FoodResource {
     private FoodService foodService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<FoodDTO> findFoodById(@PathVariable Long id) {
+    public ResponseEntity<FoodDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(foodService.findById(id));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Page<FoodDTO>> findAllFood(Pageable pageable) {
+    public ResponseEntity<Page<FoodDTO>> findAll(Pageable pageable) {
         return ResponseEntity.ok().body(foodService.findAll(pageable));
     }
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
-    public ResponseEntity<FoodDTO> insertFood(@RequestBody FoodDTO dto) {
+    public ResponseEntity<FoodDTO> insert(@RequestBody FoodDTO dto) {
         dto = foodService.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
@@ -40,14 +40,14 @@ public class FoodResource {
 
     @PutMapping(value = "/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
-    public ResponseEntity<FoodDTO> updateFood(@PathVariable Long id, @RequestBody FoodDTO dto) {
+    public ResponseEntity<FoodDTO> update(@PathVariable Long id, @RequestBody FoodDTO dto) {
         dto = foodService.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
-    public ResponseEntity<Void> deleteFood(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         foodService.delete(id);
         return ResponseEntity.noContent().build();
     }

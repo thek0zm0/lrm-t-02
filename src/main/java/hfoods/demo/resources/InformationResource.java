@@ -33,7 +33,7 @@ public class InformationResource {
     }
 
     @PostMapping
-    public ResponseEntity<InformationDTO> insertInformation(@RequestBody InformationDTO dto) {
+    public ResponseEntity<InformationDTO> insert(@RequestBody InformationDTO dto) {
         dto = informationService.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
@@ -42,7 +42,7 @@ public class InformationResource {
 
     @PutMapping(value = "/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
-    public ResponseEntity<InformationDTO> updateInformation(@PathVariable Long id, @RequestBody InformationDTO dto) {
+    public ResponseEntity<InformationDTO> update(@PathVariable Long id, @RequestBody InformationDTO dto) {
         dto = informationService.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }
