@@ -8,11 +8,14 @@ import hfoods.demo.entities.Role;
 import hfoods.demo.entities.User;
 import hfoods.demo.repositories.RoleRepository;
 import hfoods.demo.repositories.UserRepository;
+import hfoods.demo.services.exceptions.DatabaseException;
 import hfoods.demo.services.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -68,6 +71,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public UserDTO update(Long id, UserUpdateDTO dto) {
         authService.validateAdminOrNutritionist(authService.authenticated().getId());
+        authService.validateSelf(id);
         try {
             User entity = repository.getOne(id);
             copyDtoToEntity(dto, entity);
@@ -89,6 +93,20 @@ public class UserService implements UserDetailsService {
         }
         logger.info("User found: " + username);
         return user;
+    }
+
+    public void delete(Long id) {
+        authService.validateSelfOrAdmin(authService.authenticated().getId());
+        authService.validateSelf(id);
+        try {
+            repository.deleteById(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Id not found " + id);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Integrity violation");
+        }
     }
 
     private void copyDtoToEntity(UserDTO dto, User entity) {

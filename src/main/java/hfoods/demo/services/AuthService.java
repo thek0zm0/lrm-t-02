@@ -38,6 +38,23 @@ public class AuthService {
         }
     }
 
+    public void validateSelf(Long userId) {
+        var user = authenticated();
+
+        if (Objects.equals(user.getId(), userId)) {
+            throw new ForbiddenException("Can't modify own admin user");
+        }
+    }
+
+    public void validateAdmin(Long userId) {
+        var user = authenticated();
+
+        if (!Objects.equals(user.getId(), userId)
+                && !user.hasRole("ROLE_ADMIN")) {
+            throw new ForbiddenException("Access denied");
+        }
+    }
+
     public void validateAdminOrNutritionist(Long userId) {
         var user = authenticated();
 

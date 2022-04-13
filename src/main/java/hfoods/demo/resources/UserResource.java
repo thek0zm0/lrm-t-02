@@ -49,4 +49,11 @@ public class UserResource {
         UserDTO newDto = userService.update(id, dto);
         return ResponseEntity.ok().body(newDto);
     }
+
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
