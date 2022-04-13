@@ -1,15 +1,17 @@
 package hfoods.demo.resources;
 
 import hfoods.demo.dto.UserDTO;
+import hfoods.demo.dto.UserInsertDTO;
 import hfoods.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/users")
@@ -27,5 +29,13 @@ public class UserResource {
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok().body(userService.findbyId(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<UserDTO> insert(@RequestBody @Valid UserInsertDTO dto) {
+        UserDTO newDto = userService.insert(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(newDto);
     }
 }
