@@ -1,6 +1,5 @@
 package hfoods.demo.repositories;
 
-import hfoods.demo.entities.Food;
 import hfoods.demo.entities.Meal;
 import org.springframework.data.jpa.repository.JpaRepository;
 

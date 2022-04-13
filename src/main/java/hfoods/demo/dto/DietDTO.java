@@ -2,7 +2,6 @@ package hfoods.demo.dto;
 
 import hfoods.demo.entities.Diet;
 import lombok.*;
-import org.apache.tomcat.jni.Local;
 
 import java.time.LocalDateTime;
 import java.util.List;
