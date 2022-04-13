@@ -57,6 +57,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public UserDTO insert(UserInsertDTO dto) {
+        authService.validateAdminOrNutritionist(authService.authenticated().getId());
         User entity = new User();
         copyDtoToEntity(dto, entity);
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -66,6 +67,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public UserDTO update(Long id, UserUpdateDTO dto) {
+        authService.validateAdminOrNutritionist(authService.authenticated().getId());
         try {
             User entity = repository.getOne(id);
             copyDtoToEntity(dto, entity);

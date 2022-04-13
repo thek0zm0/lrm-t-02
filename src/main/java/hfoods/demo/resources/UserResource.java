@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -22,6 +23,7 @@ public class UserResource {
     private UserService userService;
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
     public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable) {
         Page<UserDTO> list = userService.findAllPaged(pageable);
         return ResponseEntity.ok().body(list);
@@ -33,6 +35,7 @@ public class UserResource {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
     public ResponseEntity<UserDTO> insert(@RequestBody @Valid UserInsertDTO dto) {
         UserDTO newDto = userService.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -41,6 +44,7 @@ public class UserResource {
     }
 
     @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
     public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody @Valid UserUpdateDTO dto) {
         UserDTO newDto = userService.update(id, dto);
         return ResponseEntity.ok().body(newDto);
