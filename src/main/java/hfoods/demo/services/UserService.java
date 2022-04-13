@@ -3,6 +3,7 @@ package hfoods.demo.services;
 import hfoods.demo.dto.RoleDTO;
 import hfoods.demo.dto.UserDTO;
 import hfoods.demo.dto.UserInsertDTO;
+import hfoods.demo.dto.UserUpdateDTO;
 import hfoods.demo.entities.Role;
 import hfoods.demo.entities.User;
 import hfoods.demo.repositories.RoleRepository;
@@ -20,6 +21,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -59,6 +62,19 @@ public class UserService implements UserDetailsService {
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         entity = repository.save(entity);
         return new UserDTO(entity);
+    }
+
+    @Transactional
+    public UserDTO update(Long id, UserUpdateDTO dto) {
+        try {
+            User entity = repository.getOne(id);
+            copyDtoToEntity(dto, entity);
+            entity = repository.save(entity);
+            return new UserDTO(entity);
+        }
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Id not found " + id);
+        }
     }
 
     @Override
