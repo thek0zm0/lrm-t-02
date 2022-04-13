@@ -46,9 +46,7 @@ public class DietResource {
     @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
     // arrumar essa porcaria
     public ResponseEntity<Void> insertMealInDiet(@PathVariable Long dietId,
-                                                 @RequestBody @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
-                                                 @JsonProperty("mealsIds")
-                                                         List<Long> mealIds) {
+                                                 @RequestBody List<Long> mealIds) {
         dietService.insertMeals(dietId, mealIds);
 
         return ResponseEntity.noContent().build();
