@@ -41,7 +41,6 @@ public class DietResource {
 
     @PutMapping("/{dietId}")
     @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
-    // arrumar essa porcaria
     public ResponseEntity<Void> insertMealInDiet(@PathVariable Long dietId,
                                                  @RequestBody List<Long> mealIds) {
         dietService.insertMeals(dietId, mealIds);
