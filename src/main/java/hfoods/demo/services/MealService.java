@@ -7,9 +7,12 @@ import hfoods.demo.entities.Meal;
 import hfoods.demo.repositories.FoodItemRepository;
 import hfoods.demo.repositories.FoodRepository;
 import hfoods.demo.repositories.MealRepository;
+import hfoods.demo.services.exceptions.DatabaseException;
 import hfoods.demo.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -95,6 +100,29 @@ public class MealService {
         meal.setTimeHour(LocalDateTime.now().toString());
         meal = mealRepository.save(meal);
         return new MealDTO(meal);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        var user = authService.authenticated();
+        authService.validateAdminOrNutritionist(user.getId());
+
+        try {
+            deleteFoodItem(id);
+            mealRepository.deleteById(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Id not found " + id);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Integrity violation");
+        }
+    }
+
+    private void deleteFoodItem(Long id) {
+        var meal = mealRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Meal not found"));
+        var foodItems = foodItemRepository.findByItemPkMeal(meal);
+        foodItemRepository.deleteAll(foodItems);
     }
 
     private void copyDtoToEntity(MealDTO dto, Meal entity) {

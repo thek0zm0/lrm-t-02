@@ -7,9 +7,12 @@ import hfoods.demo.entities.Diet;
 import hfoods.demo.repositories.DietRepository;
 import hfoods.demo.repositories.MealRepository;
 import hfoods.demo.repositories.UserRepository;
+import hfoods.demo.services.exceptions.DatabaseException;
 import hfoods.demo.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -113,6 +116,21 @@ public class DietService {
 
         dietRepository.save(diet);
         meals.forEach(meal -> mealRepository.save(meal));
+    }
+
+    public void delete(Long id) {
+        var user = authService.authenticated();
+        authService.validateAdminOrNutritionist(user.getId());
+
+        try {
+            dietRepository.deleteById(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Id not found " + id);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Integrity violation");
+        }
     }
 
     public DietDTO insertUsers(DietDTO dto) {

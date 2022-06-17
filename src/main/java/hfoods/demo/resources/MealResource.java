@@ -54,4 +54,11 @@ public class MealResource {
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        mealService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

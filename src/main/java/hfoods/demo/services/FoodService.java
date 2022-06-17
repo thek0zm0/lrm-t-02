@@ -2,6 +2,7 @@ package hfoods.demo.services;
 
 import hfoods.demo.dto.FoodDTO;
 import hfoods.demo.entities.Food;
+import hfoods.demo.repositories.FoodItemRepository;
 import hfoods.demo.repositories.FoodRepository;
 import hfoods.demo.services.exceptions.DatabaseException;
 import hfoods.demo.services.exceptions.ResourceNotFoundException;
@@ -24,6 +25,9 @@ public class FoodService {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private FoodItemRepository foodItemRepository;
 
     @Transactional(readOnly = true)
     public FoodDTO findById(Long id) {
@@ -49,10 +53,13 @@ public class FoodService {
         return new FoodDTO(food);
     }
 
+    @Transactional
     public void delete(Long id) {
         var user = authService.authenticated();
         authService.validateAdminOrNutritionist(user.getId());
+
         try {
+            deleteFoodItem(id);
             foodRepository.deleteById(id);
         }
         catch (EmptyResultDataAccessException e) {
@@ -61,6 +68,12 @@ public class FoodService {
         catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Integrity violation");
         }
+    }
+
+    private void deleteFoodItem(Long id) {
+        var food = foodRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Food not found"));
+        var foodItems = foodItemRepository.findByItemPkFood(food);
+        foodItemRepository.deleteAll(foodItems);
     }
 
     @Transactional

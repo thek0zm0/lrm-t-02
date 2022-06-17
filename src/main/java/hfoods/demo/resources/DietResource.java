@@ -47,4 +47,11 @@ public class DietResource {
 
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        dietService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
