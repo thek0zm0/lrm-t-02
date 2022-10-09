@@ -81,6 +81,7 @@ public class DietService {
         });
     }
 
+    @Transactional
     public DietDTO insert(DietDTO dto) {
         var user = authService.authenticated();
         authService.validateAdminOrNutritionist(user.getId());
