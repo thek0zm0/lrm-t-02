@@ -46,4 +46,11 @@ public class InformationResource {
         dto = informationService.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }
+
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        informationService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

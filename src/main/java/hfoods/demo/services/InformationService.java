@@ -3,9 +3,12 @@ package hfoods.demo.services;
 import hfoods.demo.dto.InformationDTO;
 import hfoods.demo.entities.Information;
 import hfoods.demo.repositories.InformationRepository;
+import hfoods.demo.services.exceptions.DatabaseException;
 import hfoods.demo.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -74,5 +77,22 @@ public class InformationService {
 
     private void copyDtoToEntity(InformationDTO dto, Information entity) {
         BeanUtils.copyProperties(dto, entity);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        var user = authService.authenticated();
+        authService.validateAdminOrNutritionist(user.getId());
+
+        try {
+            informationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Information not found"));
+            informationRepository.deleteById(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Id not found " + id);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DatabaseException("Integrity violation");
+        }
     }
 }
