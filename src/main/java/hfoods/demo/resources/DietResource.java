@@ -1,6 +1,7 @@
 package hfoods.demo.resources;
 
 import hfoods.demo.dto.DietDTO;
+import hfoods.demo.dto.MealDTO;
 import hfoods.demo.services.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/diet")
@@ -39,11 +39,29 @@ public class DietResource {
         return ResponseEntity.created(uri).body(dto);
     }
 
-    @PutMapping("/{dietId}")
+    @PutMapping(value = "/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
+    public ResponseEntity<DietDTO> update(@PathVariable Long id, @RequestBody DietDTO dto) {
+        dto = dietService.update(id, dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
+    }
+
+    @PutMapping("/insert-meal/{dietId}/{mealId}")
     @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
     public ResponseEntity<Void> insertMealInDiet(@PathVariable Long dietId,
-                                                 @RequestBody List<Long> mealIds) {
-        dietService.insertMeals(dietId, mealIds);
+                                                 @PathVariable Long mealId) {
+        dietService.insertMeals(dietId, mealId);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/insert-user/{dietId}/{userId}")
+    @PreAuthorize("hasAnyRole('ADMIN','NUTRITIONIST')")
+    public ResponseEntity<Void> insertUserInDiet(@PathVariable Long dietId,
+                                                 @PathVariable Long userId) {
+        dietService.insertUsers(dietId, userId);
 
         return ResponseEntity.noContent().build();
     }

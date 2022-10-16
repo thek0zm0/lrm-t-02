@@ -96,6 +96,7 @@ public class DietService {
         try {
             Diet entity = dietRepository.getOne(id);
             copyDtoToEntity(dto, entity);
+            entity.setId(id);
             entity = dietRepository.save(entity);
             return new DietDTO(entity);
         }
@@ -104,21 +105,23 @@ public class DietService {
         }
     }
 
-    public void insertMeals(Long dietId, List<Long> mealIds) {
+    @Transactional
+    public void insertMeals(Long dietId, Long mealId) {
         var user = authService.authenticated();
         authService.validateAdminOrNutritionist(user.getId());
 
-        System.out.println(mealIds);
+        System.out.println(mealId);
 
         var diet = dietRepository.findById(dietId).orElseThrow(() -> new ResourceNotFoundException("Diet not found"));
-        var meals = mealRepository.findAllByIdIn(mealIds);
+        var meal = mealRepository.findById(mealId).orElseThrow(() -> new ResourceNotFoundException("Meal not found"));
 
-        diet.setMeals(meals);
+        meal.setDiet(diet);
 
         dietRepository.save(diet);
-        meals.forEach(meal -> mealRepository.save(meal));
+        mealRepository.save(meal);
     }
 
+    @Transactional
     public void delete(Long id) {
         var user = authService.authenticated();
         authService.validateAdminOrNutritionist(user.getId());
@@ -134,13 +137,20 @@ public class DietService {
         }
     }
 
-    public DietDTO insertUsers(DietDTO dto) {
+    @Transactional
+    public void insertUsers(Long dietId, Long userId) {
         var user = authService.authenticated();
         authService.validateAdminOrNutritionist(user.getId());
-        var diet = new Diet();
-        copyDtoToEntity(dto, diet);
-        diet = dietRepository.save(diet);
-        return new DietDTO(diet);
+
+        System.out.println(userId);
+
+        var diet = dietRepository.findById(dietId).orElseThrow(() -> new ResourceNotFoundException("Diet not found"));
+        var userClient = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        user.setDiet(diet);
+
+        dietRepository.save(diet);
+        userRepository.save(userClient);
     }
 
     private void copyDtoToEntity(DietDTO dto, Diet entity) {

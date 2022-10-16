@@ -19,6 +19,11 @@ public class InformationResource {
     @Autowired
     private InformationService informationService;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<InformationDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok().body(informationService.findById(id));
+    }
+
     @GetMapping
     public ResponseEntity<Page<InformationDTO>> informationForCurrentUser(Pageable pageable) {
         var page = informationService.informationForCurrentyUser(pageable);

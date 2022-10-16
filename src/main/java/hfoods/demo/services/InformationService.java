@@ -1,5 +1,6 @@
 package hfoods.demo.services;
 
+import hfoods.demo.dto.FoodDTO;
 import hfoods.demo.dto.InformationDTO;
 import hfoods.demo.entities.Information;
 import hfoods.demo.repositories.InformationRepository;
@@ -25,6 +26,13 @@ public class InformationService {
 
     @Autowired
     private AuthService authService;
+
+    @Transactional(readOnly = true)
+    public InformationDTO findById(Long id) {
+        var obj = informationRepository.findById(id);
+
+        return new InformationDTO(obj.orElseThrow(() -> new ResourceNotFoundException("Food not found")));
+    }
 
     @Transactional(readOnly = true)
     public Page<InformationDTO> informationForCurrentyUser(Pageable pageable) {
