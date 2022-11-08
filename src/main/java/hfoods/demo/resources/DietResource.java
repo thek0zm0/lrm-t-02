@@ -1,7 +1,6 @@
 package hfoods.demo.resources;
 
 import hfoods.demo.dto.DietDTO;
-import hfoods.demo.dto.MealDTO;
 import hfoods.demo.services.DietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,6 +27,12 @@ public class DietResource {
     @GetMapping("/all")
     public ResponseEntity<Page<DietDTO>> findAll(Pageable pageable) {
         return ResponseEntity.ok().body(dietService.findAll(pageable));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<DietDTO>> dietForCurrentUser(Pageable pageable) {
+        var page = dietService.dietForCurrentyUser(pageable);
+        return ResponseEntity.ok().body(page);
     }
 
     @PostMapping

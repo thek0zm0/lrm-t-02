@@ -153,6 +153,27 @@ public class DietService {
         userRepository.save(userClient);
     }
 
+    @Transactional(readOnly = true)
+    public Page<DietDTO> dietForCurrentyUser(Pageable pageable) {
+        var user = authService.authenticated();
+        var diets = dietRepository.findByUsers(user, pageable);
+
+        return diets.map(obj -> {
+            List<MealDTO> meals = List.of();
+            List<UserDTO> users = List.of();
+
+            if (Objects.nonNull(obj.getMeals())) {
+                meals = obj.getMeals().stream().map(uniq -> mealService.findById(uniq.getId())).collect(Collectors.toList());
+            }
+
+            if (Objects.nonNull(obj.getUsers())) {
+                users = obj.getUsers().stream().map(uniq -> userService.findbyId(uniq.getId())).collect(Collectors.toList());
+            }
+
+            return new DietDTO(obj, users, meals);
+        });
+    }
+
     private void copyDtoToEntity(DietDTO dto, Diet entity) {
         BeanUtils.copyProperties(dto, entity);
     }
