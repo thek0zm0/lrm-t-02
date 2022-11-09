@@ -1,4 +1,4 @@
-INSERT INTO tb_diet (name, description, start_Date, end_Date) VALUES ('Cetogenica','Dieta baseada na baixa ingestao de carboidratos','27/01/2021','27/01/2022');
+INSERT INTO tb_diet (name, description, start_Date, end_Date) VALUES ('Adaptação 1','Dieta inicial','27/01/2021','27/01/2022');
 
 INSERT INTO tb_user (name, email, cpf, phone, birth_Date, password) VALUES ('Jaime', 'jaime@gmail.com', '25091825010', '011987463529', '1997-01-27','$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG');
 INSERT INTO tb_user (name, email, cpf, phone, birth_Date, password) VALUES ('John', 'john@gmail.com', '84440157092', '011982346218', '1997-01-27','$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG');
@@ -12,6 +12,10 @@ INSERT INTO tb_food (name, food_Group, img_Url, quantity, calorie, protein, carb
 INSERT INTO tb_food (name, food_Group, img_Url, quantity, calorie, protein, carbohydrate, fat, sodium, sugar, vitaminA, vitaminC, iron) VALUES ('Queijo Ricota','PROCESSED','https://media.soujusto.com.br/products/Creme_De_Queijo_Ricota_Light_Président_Pote_200g.jpg','30','53.0','5','0.0','3.5', '0.1', '0.0', '0.0', '0.0', '0.0');
 INSERT INTO tb_food (name, food_Group, img_Url, quantity, calorie, protein, carbohydrate, fat, sodium, sugar, vitaminA, vitaminC, iron) VALUES ('Sorvete','ULTRAPROCESSED','https://a-static.mlcdn.com.br/800x560/pote-de-sorvete-eskimo-grand-nevado-15-litros-eskimo-sorvetes/eskimosorvetes/6504903cb42d11eb82584201ac18500e/e911ccf0435a74051eb65d463cec3c1b.jpeg','100','201.0','3.52','24.4','10.72', '0.72', '22.3', '0.0', '0.0', '0.0');
 INSERT INTO tb_food (name, food_Group, img_Url, quantity, calorie, protein, carbohydrate, fat, sodium, sugar, vitaminA, vitaminC, iron) VALUES ('Doritos','ULTRAPROCESSED','https://m.media-amazon.com/images/I/610trEtCQuS._AC_SX425_.jpg','100','500.0','5.0','55.0','25.0', '0.6', '0.0', '0.0', '0.0', '0.0');
+INSERT INTO tb_food (name, food_Group, img_Url, quantity, calorie, protein, carbohydrate, fat, sodium, sugar, vitaminA, vitaminC, iron) VALUES ('Arroz Branco','INNATURA','http://www.irismassas.com.br/wp-content/uploads/2015/06/Porcao-de-Arroz.jpg','100','128.0','2.5','26.5','0.2', '1.0', '0.0', '0.0', '0.0', '0.0');
+INSERT INTO tb_food (name, food_Group, img_Url, quantity, calorie, protein, carbohydrate, fat, sodium, sugar, vitaminA, vitaminC, iron) VALUES ('Feijão Preto','INNATURA','https://imageswscdn.wslojas.com.br/files/24534/feijao-preto-nacional-25kg-saca-80-1.jpg','100','61.0','4.48','5.6','0.0', '1.0', '0.0', '0.0', '0.0', '1.47');
+INSERT INTO tb_food (name, food_Group, img_Url, quantity, calorie, protein, carbohydrate, fat, sodium, sugar, vitaminA, vitaminC, iron) VALUES ('Filé de Frango','INNATURA','https://t2.rg.ltmcdn.com/pt/posts/8/1/0/file_de_frango_na_airfryer_9018_orig.jpg','100','159.0','32.0','0.0','2.5', '0.5', '0.0', '0.0', '0.0', '0.3');
+
 
 INSERT INTO tb_meal (name, time_Hour, diet_id) VALUES ('Café da manhã', '06:30:00', 1);
 INSERT INTO tb_meal (name, time_Hour, diet_id) VALUES ('Almoço', '12:30:00', 1);
@@ -19,6 +23,11 @@ INSERT INTO tb_meal (name, time_Hour, diet_id) VALUES ('Janta', '18:30:00', 1);
 
 INSERT INTO tb_food_Item (meal_id, food_id, quantity, total_Calories) VALUES (1, 1, 2, 198.0);
 INSERT INTO tb_food_Item (meal_id, food_id, quantity, total_Calories) VALUES (1, 2, 1, 53.0);
+INSERT INTO tb_food_Item (meal_id, food_id, quantity, total_Calories) VALUES (2, 9, 1, 53.0);
+INSERT INTO tb_food_Item (meal_id, food_id, quantity, total_Calories) VALUES (2, 10, 1, 53.0);
+INSERT INTO tb_food_Item (meal_id, food_id, quantity, total_Calories) VALUES (2, 11, 1, 53.0);
+INSERT INTO tb_food_Item (meal_id, food_id, quantity, total_Calories) VALUES (2, 3, 1, 53.0);
+INSERT INTO tb_food_Item (meal_id, food_id, quantity, total_Calories) VALUES (2, 4, 1, 53.0);
 
 INSERT INTO tb_role (authority) VALUES ('ROLE_NUTRITIONIST');
 INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
