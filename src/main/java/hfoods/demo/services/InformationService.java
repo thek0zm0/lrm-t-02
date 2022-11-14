@@ -29,9 +29,9 @@ public class InformationService {
 
     @Transactional(readOnly = true)
     public InformationDTO findById(Long id) {
-        var obj = informationRepository.findById(id);
-
-        return new InformationDTO(obj.orElseThrow(() -> new ResourceNotFoundException("Food not found")));
+        var obj = informationRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Food not found"));
+        return InformationDTO.of(obj);
     }
 
     @Transactional(readOnly = true)

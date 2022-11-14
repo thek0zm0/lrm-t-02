@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 @Setter
 @EqualsAndHashCode
 @Entity
+@Builder
 @Table(name = "tb_information")
 public class Information implements Serializable {
 
