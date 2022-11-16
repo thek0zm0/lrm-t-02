@@ -9,6 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
+@Builder
 public class FoodDTO {
 
     private Long id;

@@ -1,16 +1,16 @@
 package hfoods.demo.tests;
 
+import hfoods.demo.dto.FoodDTO;
 import hfoods.demo.dto.InformationDTO;
-import hfoods.demo.dto.RoleDTO;
+import hfoods.demo.entities.Food;
 import hfoods.demo.entities.Information;
 import hfoods.demo.entities.Role;
 import hfoods.demo.entities.User;
 import hfoods.demo.entities.enums.ActivityStatus;
+import hfoods.demo.entities.enums.FoodGroup;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -40,6 +40,44 @@ public class Helper {
                 .weight(90.0)
                 .height(1.80)
                 .basalMetabolicRate(1600D)
+                .build();
+    }
+
+    public static Food umFood(Long id) {
+        return Food.builder()
+                .id(1L)
+                .name("Food test")
+                .calorie(120D)
+                .protein(10D)
+                .carbohydrate(5D)
+                .fat(1D)
+                .quantity(50)
+                .sugar(1D)
+                .sodium(2D)
+                .vitaminA(0.1D)
+                .vitaminC(0.2D)
+                .iron(0.5D)
+                .imgUrl("url/test")
+                .foodGroup(FoodGroup.INNATURA)
+                .build();
+    }
+
+    public static FoodDTO umFoodDTO(Long id) {
+        return FoodDTO.builder()
+                .id(1L)
+                .name("Food test")
+                .calorie(120D)
+                .protein(10D)
+                .carbohydrate(5D)
+                .fat(1D)
+                .quantity(50)
+                .sugar(1D)
+                .sodium(2D)
+                .vitaminA(0.1D)
+                .vitaminC(0.2D)
+                .iron(0.5D)
+                .imgUrl("url/test")
+                .foodGroup(FoodGroup.INNATURA)
                 .build();
     }
 
