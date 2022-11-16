@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @EqualsAndHashCode
 @Entity
 @Table(name = "tb_user")
+@Builder
 public class User implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 9178661439383356177L;

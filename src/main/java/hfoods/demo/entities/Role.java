@@ -12,6 +12,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Entity
 @Table(name = "tb_role")
+@Builder
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 9178661439313356177L;
