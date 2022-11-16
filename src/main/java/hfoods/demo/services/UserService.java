@@ -45,7 +45,7 @@ public class UserService implements UserDetailsService {
     private AuthService authService;
 
     @Transactional(readOnly = true)
-    public UserDTO findbyId(Long id) {
+    public UserDTO findById(Long id) {
         authService.validateSelfOrAdmin(id);
         var obj = repository.findById(id);
         return new UserDTO(obj.orElseThrow(() -> new ResourceNotFoundException("User not found.")));

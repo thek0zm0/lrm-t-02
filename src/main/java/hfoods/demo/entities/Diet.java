@@ -13,6 +13,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Entity
 @Table(name = "tb_diet")
+@Builder
 public class Diet implements Serializable {
 
     private static final long serialVersionUID = 9178661439383356177L;

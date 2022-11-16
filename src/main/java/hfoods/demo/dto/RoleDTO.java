@@ -8,6 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
+@Builder
 public class RoleDTO {
 
     private Long id;

@@ -12,6 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode
+@Builder
 public class UserDTO implements Serializable {
 
     private static final long serialVersionUID = 9178661439383356177L;

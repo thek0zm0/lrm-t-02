@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
+@Builder
 public class DietDTO {
 
     private Long id;

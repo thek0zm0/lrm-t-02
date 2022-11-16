@@ -55,7 +55,7 @@ public class DietService {
         }
 
         if (Objects.nonNull(obj.getUsers())) {
-            users = obj.getUsers().stream().map(uniq -> userService.findbyId(uniq.getId())).collect(Collectors.toList());
+            users = obj.getUsers().stream().map(uniq -> userService.findById(uniq.getId())).collect(Collectors.toList());
         }
 
         return new DietDTO(obj, users, meals);
@@ -74,7 +74,7 @@ public class DietService {
             }
 
             if (Objects.nonNull(obj.getUsers())) {
-                users = obj.getUsers().stream().map(uniq -> userService.findbyId(uniq.getId())).collect(Collectors.toList());
+                users = obj.getUsers().stream().map(uniq -> userService.findById(uniq.getId())).collect(Collectors.toList());
             }
 
             return new DietDTO(obj, users, meals);
@@ -93,6 +93,9 @@ public class DietService {
 
     @Transactional
     public DietDTO update(Long id, DietDTO dto) {
+        var user = authService.authenticated();
+        authService.validateAdminOrNutritionist(user.getId());
+
         try {
             Diet entity = dietRepository.getOne(id);
             copyDtoToEntity(dto, entity);
@@ -127,6 +130,7 @@ public class DietService {
         authService.validateAdminOrNutritionist(user.getId());
 
         try {
+            findById(id);
             dietRepository.deleteById(id);
         }
         catch (EmptyResultDataAccessException e) {
@@ -167,7 +171,7 @@ public class DietService {
             }
 
             if (Objects.nonNull(obj.getUsers())) {
-                users = obj.getUsers().stream().map(uniq -> userService.findbyId(uniq.getId())).collect(Collectors.toList());
+                users = obj.getUsers().stream().map(uniq -> userService.findById(uniq.getId())).collect(Collectors.toList());
             }
 
             return new DietDTO(obj, users, meals);

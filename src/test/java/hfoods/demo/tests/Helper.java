@@ -1,15 +1,12 @@
 package hfoods.demo.tests;
 
-import hfoods.demo.dto.FoodDTO;
-import hfoods.demo.dto.InformationDTO;
-import hfoods.demo.entities.Food;
-import hfoods.demo.entities.Information;
-import hfoods.demo.entities.Role;
-import hfoods.demo.entities.User;
+import hfoods.demo.dto.*;
+import hfoods.demo.entities.*;
 import hfoods.demo.entities.enums.ActivityStatus;
 import hfoods.demo.entities.enums.FoodGroup;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -64,7 +61,7 @@ public class Helper {
 
     public static FoodDTO umFoodDTO(Long id) {
         return FoodDTO.builder()
-                .id(1L)
+                .id(id)
                 .name("Food test")
                 .calorie(120D)
                 .protein(10D)
@@ -81,6 +78,45 @@ public class Helper {
                 .build();
     }
 
+    public static Meal umaMeal(Long id) {
+        return Meal.builder()
+                .id(id)
+                .name("Uma Refeição Teste")
+                .timeHour(LocalDateTime.now().toString())
+                .build();
+    }
+
+    public static MealDTO umaMealDTO(Long id) {
+        return MealDTO.builder()
+                .id(id)
+                .name("Uma Refeição Teste")
+                .timeHour("")
+                .foods(new ArrayList<>(List.of(umFoodDTO(1L))))
+                .build();
+    }
+
+    public static DietDTO umaDietDTO(Long id) {
+        return DietDTO.builder()
+                .id(id)
+                .name("Dieta teste")
+                .description("Descrição dieta teste")
+                .startDate("")
+                .endDate("")
+                .build();
+    }
+
+    public static Diet umaDiet(Long id) {
+        return Diet.builder()
+                .id(id)
+                .name("Dieta teste")
+                .description("Descrição dieta teste")
+                .startDate("")
+                .endDate("")
+                .users(new ArrayList<>(List.of(umUsuario("ROLE_ADMIN"))))
+                .meals(new ArrayList<>(List.of(umaMeal(1L))))
+                .build();
+    }
+
     public static User umUsuario(String roleName) {
         return User.builder()
                 .id(1L)
@@ -93,6 +129,40 @@ public class Helper {
                 .build();
     }
 
+    public static UserDTO umUserDTO(Long id) {
+        return UserDTO.builder()
+                .id(1L)
+                .name("Usuario teste")
+                .cpf("34523412398")
+                .email("emailteste@test.com")
+                .phone("1174329468")
+                .roles(Set.of(umaRoleDto("ROLE_ADMIN")))
+                .build();
+    }
+
+    public static UserInsertDTO umUserInsertDTO(Long id, String roleName) {
+        var user = new UserInsertDTO();
+        user.setId(id);
+        user.setName("Usuario teste");
+        user.setPassword("testeteste");
+        user.setCpf("34523412398");
+        user.setEmail("emailteste@test.com");
+        user.setPhone("1174329468");
+        user.setRoles(Set.of(umaRoleDto(roleName)));
+        return user;
+    }
+
+    public static UserUpdateDTO umUserUpdateDTO(Long id, String roleName) {
+        var user = new UserUpdateDTO();
+        user.setId(id);
+        user.setName("Usuario teste");
+        user.setCpf("34523412398");
+        user.setEmail("emailteste@test.com");
+        user.setPhone("1174329468");
+        user.setRoles(Set.of(umaRoleDto(roleName)));
+        return user;
+    }
+
     public static Role umaRole(String roleName) {
         return Role.builder()
                 .id(1L)
@@ -100,4 +170,10 @@ public class Helper {
                 .build();
     }
 
+    public static RoleDTO umaRoleDto(String roleName) {
+        return RoleDTO.builder()
+                .id(1L)
+                .authority(roleName)
+                .build();
+    }
 }
